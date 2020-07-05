@@ -2,6 +2,45 @@ import React from 'react'
 import AccountBalance from './AccountBalance'
 import { Link } from 'react-router-dom';
 
+const name = {
+    paddingLeft: "2%",
+    fontSize: '300%',
+    borderBottom: '2px solid black',
+}
+
+const links = {
+    float: 'right',
+    paddingRight: '3%',
+    fontSize: '30%',
+    fontWeight: 'normal',
+    fontFamily: 'Georgia'
+}
+
+const transactions = {
+    marginTop: '-2.1%',
+    textAlign: 'center',
+    paddingTop: '10px'
+}
+
+const tran = {
+    fontFamily: 'Georgia'
+}
+
+const log = {
+    paddingTop: '3%',
+    paddingLeft: '3%',
+    paddingBottom:'3%',
+    fontFamily: 'Georgia',
+}
+
+const space = {
+    marginBottom: '10px'
+}
+
+const test = {
+    paddingLeft: '5%',
+}
+
 class Debits extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +55,7 @@ class Debits extends React.Component {
 
     componentDidMount() {
         let d = new Date();
-        let fullDate = d.getFullYear() + '-' + d.getDate() + '-' + (d.getMonth() + 1);
+        let fullDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
         this.setState({ date: fullDate });
     }
 
@@ -56,28 +95,37 @@ class Debits extends React.Component {
     render() {
         return(
             <div>
-                <Link to="/">Home</Link>
-                <h1>Debits</h1>
+                
+                <h1 style={name}>Debits
+                    <span style={links}>
+                        <Link to="/">Home</Link>
+                    </span>
+                </h1>
 
-                <div>
-                    {this.state.transactions.map(tr => <p key={tr.id}>{tr.description}, {tr.amount}, {tr.date}</p>)}
-                    {this.props.debits.map(deb => <p key={deb.id}>{deb.description}, {deb.amount}, {deb.date}</p>)}
+                <div style={{ backgroundColor:'#FFECC4'}}>
+                    <div style={transactions}>
+                        {this.state.transactions.map(tr => <p style={tran} key={tr.id}>{tr.description} | ${tr.amount} | {tr.date}</p>)}
+                        {this.props.debits.map(deb => <p style={tran} key={deb.id}>{deb.description} | ${deb.amount} | {deb.date.substring(0,10)}</p>)}
+                    </div>
+
+                    <AccountBalance accountBalance={this.props.accountBalance} />
+
+                    <form onSubmit={this.handleSubmit} style={log}>
+                        <div style={space}>
+                            <label htmlFor="description">Description: </label>
+                            <input type="text" name="des" onChange={this.handleChange} />
+                        </div>
+
+                        <div style={space}>
+                            <label htmlFor="amount">Amount: </label>
+                            <input type="number" step="0.01" min="0" name="a" onChange={this.handleChange} />
+                        </div>
+
+                        <span style={test}>
+                            <button>Add debit</button>
+                        </span>
+                    </form>
                 </div>
-                <AccountBalance accountBalance={this.props.accountBalance} />
-
-                <form onSubmit={this.handleSubmit}>
-                    <div>
-                        <label htmlFor="description">Description</label>
-                        <input type="text" name="des" onChange={this.handleChange}/>
-                    </div>
-
-                    <div>
-                        <label htmlFor="amount">Amount</label>
-                        <input type="number" step="0.01" min="0" name="a" onChange={this.handleChange}/>
-                    </div>
-
-                    <button>Add debit</button>
-                </form>
 
             </div>   
         );

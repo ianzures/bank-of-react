@@ -13,7 +13,8 @@ const links = {
     fontWeight: 'normal',
     fontFamily: 'Georgia'
 }
-const space = {
+
+const space= {
     paddingRight: '1%',
 }
 
@@ -39,7 +40,7 @@ class Home extends React.Component{
                     </span>
                 </h1>
                 <div style={background}>
-                    <AccountBalance accountBalance={this.props.accountBalance.toFixed(2)} />
+                    <AccountBalance accountBalance={this.props.accountBalance} />
                 </div>
             </div> 
         )

@@ -15,13 +15,6 @@ const space = {
     marginBottom: '10px'
 }
 
-const label = {
-   // display: 'inline - block'
-   //// float: left;
-   // clear: left;
-   // width: 250px;
-   // text - align: right;
-}
 const input = {
     display: 'inlineBlock',
     float: 'right',

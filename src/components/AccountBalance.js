@@ -18,7 +18,7 @@ class AccountBalance extends React.Component{
     render() {
         return (
             <div style={bal}>
-                <p style={heading}>Balance: ${this.props.accountBalance}</p>
+                <p style={heading}>Balance: ${this.props.accountBalance.toFixed(2)}</p>
             </div>
         );
     }
