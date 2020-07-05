@@ -1,11 +1,12 @@
 import React from 'react'
 import AccountBalance from './AccountBalance'
+import { Link } from 'react-router-dom';
 
 class Debits extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            debAB : this.props.AccountBalance,
+           // debAB : 0,
             transactions: [],
             description: '',
             amount: 0,
@@ -48,20 +49,21 @@ class Debits extends React.Component {
 
         this.setState({ transactions: tempArr });
 
-        let nTotal = this.props.accountBalance - this.state.amount;
-        this.setState({ accountBalance: nTotal });
+       // let nTotal = this.props.accountBalance - this.state.amount;
+        //this.setState({ debAB: nTotal });
     }
 
     render() {
         return(
             <div>
+                <Link to="/">Home</Link>
                 <h1>Debits</h1>
 
                 <div>
                     {this.state.transactions.map(tr => <p key={tr.id}>{tr.description}, {tr.amount}, {tr.date}</p>)}
                     {this.props.debits.map(deb => <p key={deb.id}>{deb.description}, {deb.amount}, {deb.date}</p>)}
                 </div>
-                <AccountBalance accountBalance={this.state.debAB} />
+                <AccountBalance accountBalance={this.props.accountBalance} />
 
                 <form onSubmit={this.handleSubmit}>
                     <div>

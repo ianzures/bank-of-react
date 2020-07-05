@@ -18,6 +18,8 @@ class Home extends React.Component{
                 <Link to="/login">Login</Link>
                 <br/>
                 <Link to="/debits">Debits</Link>
+                <br />
+                <Link to="/credits">Credits</Link>
 
                 <AccountBalance accountBalance={this.props.accountBalance}/>
             </div> 
