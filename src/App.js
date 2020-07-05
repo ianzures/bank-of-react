@@ -62,11 +62,14 @@ class App extends Component{
     render(){
 
         const HomeComponent = () => (<Home accountBalance={this.state.creditTotal - this.state.debitTotal} />);
+        const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} {...this.props} />);
+
         const UserProfileComponent = () =>
             (<UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
         );
-        const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} {...this.props} />);
-        const DebitComponent = () => (<Debits debits={this.state.debits} credits={this.state.credits} />);
+        const DebitComponent = () =>
+            (<Debits debits={this.state.debits} credits={this.state.credits} creditTotal={this.state.creditTotal} debitTotal={this.state.creditTotal} />
+            );
 
         return (
             <Router>
