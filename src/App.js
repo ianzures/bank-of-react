@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import UserProfile from './components/UserProfile';
 import LogIn from './components/LogIn';
+import Debits from './components/Debits';
 import axios from 'axios';
 
 class App extends Component{
@@ -14,7 +15,6 @@ class App extends Component{
             credits: [],
             creditTotal: 0,
             debitTotal: 0,
-            //accountBalance: 14568.27,
             currentUser: {
                 userName: 'bob_loblaw',
                 memberSince: '08/23/99',
@@ -66,6 +66,7 @@ class App extends Component{
             (<UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
         );
         const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} {...this.props} />);
+        const DebitComponent = () => (<Debits debits={this.state.debits} />);
 
         return (
             <Router>
@@ -73,6 +74,7 @@ class App extends Component{
                     <Route exact path="/" component={HomeComponent} />
                     <Route exact path="/userProfile" component={UserProfileComponent} />
                     <Route exact path="/login" render={LogInComponent} />
+                    <Route exact path="/debits" render={DebitComponent}/>
                 </Switch>
             </Router>
         );
