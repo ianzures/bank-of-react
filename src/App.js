@@ -3,18 +3,45 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import UserProfile from './components/UserProfile';
 import LogIn from './components/LogIn';
+import axios from 'axios';
 
 class App extends Component{
 
     constructor() {
         super();
         this.state = {
-            accountBalance: 14568.27,
+            debits: [],
+            credits: [],
+            creditTotal: 0,
+            debitTotal: 0,
+            //accountBalance: 14568.27,
             currentUser: {
                 userName: 'bob_loblaw',
                 memberSince: '08/23/99',
             }
         }
+    }
+
+    componentDidMount() {
+        // Fetch credits and store them in this.state.credits
+        axios.get("https://moj-api.herokuapp.com/credits").then(result => {
+            this.setState({ credits: result.data });
+
+            let cTotal = 0;
+            this.state.credits.forEach(c => cTotal += c.amount);
+            this.setState({ creditTotal: cTotal });
+
+        }).catch(err => console.log(err));
+
+        // Fetch debits and store them in this.state.debits
+        axios.get("https://moj-api.herokuapp.com/debits").then(result => {
+            this.setState({ debits: result.data });
+
+            let dTotal = 0;
+            this.state.debits.forEach(d => dTotal += d.amount);
+            this.setState({ debitTotal: dTotal });
+
+        }).catch(err => console.log(err));
     }
 
     mockLogIn = (logInInfo) =>{
@@ -34,7 +61,7 @@ class App extends Component{
 
     render(){
 
-        const HomeComponent = () => (<Home accountBalance={this.state.accountBalance} />);
+        const HomeComponent = () => (<Home accountBalance={this.state.creditTotal - this.state.debitTotal} />);
         const UserProfileComponent = () =>
             (<UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
         );
