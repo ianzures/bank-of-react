@@ -68,7 +68,7 @@ class App extends Component{
             (<UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
         );
         const DebitComponent = () =>
-            (<Debits debits={this.state.debits} credits={this.state.credits} creditTotal={this.state.creditTotal} debitTotal={this.state.creditTotal} />
+            (<Debits debits={this.state.debits} credits={this.state.credits} accountBalance={this.state.creditTotal - this.state.debitTotal} />
             );
 
         return (
