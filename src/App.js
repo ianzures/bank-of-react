@@ -45,6 +45,28 @@ class App extends Component{
         }).catch(err => console.log(err));
     }
 
+    credIncrement = (amount) => {
+        const credTotal = this.state.creditTotal - amount;
+        this.setState({ creditTotal: credTotal });
+    }
+
+    addCreditTransaction = (cTran) => {
+        const cTransactions = this.state.credits;
+        cTransactions.unshift(cTran);
+        this.setState({ credits: cTransactions });
+    }
+
+    debIncrement = (amount) => {
+        const debTotal = this.state.debitTotal - amount;
+        this.setState({ debitTotal: debTotal });
+    }
+
+    addDebitTransaction = (dTran) => {
+        const dTransactions = this.state.debits;
+        dTransactions.unshift(dTran);
+        this.setState({ debits: dTransactions });
+    }
+
     mockLogIn = (logInInfo) =>{
 
         /* Page would not load with this syntax. Decided instead to more explicitly set updatedUser to currentUser object.
@@ -64,13 +86,15 @@ class App extends Component{
 
         const HomeComponent = () => (<Home accountBalance={this.state.creditTotal - this.state.debitTotal} />);
         const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} {...this.props} />);
-        const CreditComponent = () => (<Credits credits={this.state.credits} accountBalance={this.state.creditTotal - this.state.debitTotal} />);
+        const CreditComponent = () => (<Credits credits={this.state.credits} credIncrement={this.credIncrement} addCreditTransaction={this.addCreditTransaction}
+            accountBalance={this.state.creditTotal - this.state.debitTotal} />);
 
         const UserProfileComponent = () =>
             (<UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
         );
         const DebitComponent = () =>
-            (<Debits debits={this.state.debits} credits={this.state.credits} accountBalance={this.state.creditTotal - this.state.debitTotal} />
+            (<Debits debits={this.state.debits} credits={this.state.credits} accountBalance={this.state.creditTotal - this.state.debitTotal}
+                debIncrement={this.debIncrement} addDebitTransaction={this.addDebitTransaction} />
             );
 
         return (
