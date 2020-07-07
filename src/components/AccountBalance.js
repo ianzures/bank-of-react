@@ -1,24 +1,27 @@
 import React from 'react';
 
-const bal = {
-    paddingLeft: '3%',
+const balanceBox = {
     paddingTop: '2%',
-    textShadow: '2px 2px black'
+    paddingLeft: '3%',
+    textShadow: '2px 2px black',
 }
-const heading = {
+const balance = {
     color: 'white',
-    textShadow: '2px 2px 4px #000000',
-    textDecoration: 'underline',
     fontSize: '150%',
-    fontWeight: 'normal'
+    fontWeight: 'normal',
+    textDecoration: 'underline',
+    textShadow: '2px 2px 4px #000000'
 }
 
 class AccountBalance extends React.Component{
 
     render() {
         return (
-            <div style={bal}>
-                <p style={heading}>Balance: ${this.props.accountBalance.toFixed(2)}</p>
+            <div style={balanceBox}>
+
+                {/* .toFixed(2) used to round balance to two decimal places */}
+                <p style={balance}>Balance: ${this.props.accountBalance.toFixed(2)}</p>
+
             </div>
         );
     }
