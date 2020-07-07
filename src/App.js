@@ -52,12 +52,12 @@ class App extends Component{
     }
 
     /* Both functions take a parameter passed by the Credits component to modify states at the App level. Allows pages to remain consistent.*/
-    credIncrement = (amount) => {
+   // credIncrement = (amount) => {
 
         // Increments creditTotal by the amount property of a transaction added by user. Account balance will remain correct across pages.
-        const credTotal = this.state.creditTotal + amount;
-        this.setState({ creditTotal: credTotal });
-    }
+    //    const credTotal = this.state.creditTotal - amount;
+    //    this.setState({ creditTotal: credTotal });
+    //}
 
     addCreditTransaction = (creditTransaction) => {
         const transactions = this.state.credits;
@@ -68,11 +68,17 @@ class App extends Component{
     }
 
     /* Both functions take a parameter passed by the Debits component to modify states at the App level*/
-    debIncrement = (amount) => {
-
-        // Increments debitTotal by the amount property of a transaction added by user. 
-        const debTotal = this.state.debitTotal + amount;
-        this.setState({ debitTotal: debTotal });
+    increment = (type,amount) => {
+        if (type === 'debit') {
+            // Adding a debit will subtract from the balance.
+            const debTotal = this.state.debitTotal - amount;
+            this.setState({ debitTotal: debTotal });
+        }
+        else if(type === 'credit') {
+            // Adding a credit will add to the balance.
+            const credTotal = (this.state.creditTotal - (amount*-1));
+            this.setState({ creditTotal: credTotal });
+        }
     }
 
     addDebitTransaction = (debitTransaction) => {
@@ -101,15 +107,15 @@ class App extends Component{
     render(){
 
         const HomeComponent = () => (<Home accountBalance={this.state.creditTotal - this.state.debitTotal} />);
-        const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} {...this.props} />);
+        const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} /*{...this.props}*/ />);
         const UserProfileComponent = () =>
             (<UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
         );
         const CreditComponent = () =>
-            (<Credits credIncrement={this.credIncrement} addCreditTransaction={this.addCreditTransaction} credits={this.state.credits} accountBalance={this.state.creditTotal - this.state.debitTotal} />
+            (<Credits increment={this.increment} addCreditTransaction={this.addCreditTransaction} credits={this.state.credits} accountBalance={(this.state.creditTotal - this.state.debitTotal)} />
         );
         const DebitComponent = () =>
-            (<Debits debIncrement={this.debIncrement} addDebitTransaction={this.addDebitTransaction} debits={this.state.debits} accountBalance={this.state.creditTotal - this.state.debitTotal} />
+            (<Debits increment={this.increment} addDebitTransaction={this.addDebitTransaction} debits={this.state.debits} accountBalance={(this.state.creditTotal - this.state.debitTotal)} />
         );
 
         return (
