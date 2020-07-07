@@ -2,30 +2,18 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 const log = {
-    paddingTop: '3%',
+    paddingTop: '2%',
     paddingLeft: '40%',
     paddingRight: '40%',
     fontFamily: 'Georgia',
 }
-const test = {
-    paddingLeft: '30%',
-}
-
-const space = {
-    marginBottom: '10px'
-}
-
-const input = {
-    display: 'inlineBlock',
-    float: 'right',
-}
 
 const background = {
-    backgroundImage: 'url("https://static.independent.co.uk/s3fs-public/thumbnails/image/2013/09/12/21/bank-of-england-EPA.jpg")',
+    marginTop: '1%',
+    paddingBottom: '50%',
     backgroundSize: 'cover',
     backgroundPositin: 'center',
-    paddingBottom: '50%',
-    marginTop:'1%'
+    backgroundImage: 'url("https://static.independent.co.uk/s3fs-public/thumbnails/image/2013/09/12/21/bank-of-england-EPA.jpg")',
 }
 
 class LogIn extends Component{
@@ -75,23 +63,26 @@ class LogIn extends Component{
             <div>
                 <form style={log} onSubmit={this.handleSubmit}>
 
-                    <div style={space}>
+                    <div style={{ marginBottom: '10px' }}>
                         <label htmlFor="userName">User Name: </label>
-                        <input type="text" name="userName" onChange={this.handleChange} value={this.state.user.userName} style={input}/>
+                        <input style={{ display: 'inlineBlock', float: 'right' }}
+                            type="text" name="userName" onChange={this.handleChange} value={this.state.user.userName}
+                        />
                     </div>
 
-                    <div style={space}>
+                    <div style={{ marginBottom: '10px' }}>
                         <label htmlFor="password">Password: </label>
-                        <input type="password" name="password" style={input}/>
+                        <input style={{ display: 'inlineBlock', float: 'right' }}
+                            type="password" name="password"
+                        />
                     </div>
 
-                    <span style={test}>
+                    <span style={{ paddingLeft: '30%' }}>
                         <button >Log In</button>
                     </span>
                 </form>
 
-                <div style={background}>
-                </div>
+                <div style={background}> </div>
             </div>
         );
     }

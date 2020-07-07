@@ -51,42 +51,36 @@ class App extends Component{
         }).catch(err => console.log(err));
     }
 
-    /* Both functions take a parameter passed by the Credits component to modify states at the App level. Allows pages to remain consistent.*/
-   // credIncrement = (amount) => {
+    addTransaction = (type, transaction) => {
+        console.log(type);
 
-        // Increments creditTotal by the amount property of a transaction added by user. Account balance will remain correct across pages.
-    //    const credTotal = this.state.creditTotal - amount;
-    //    this.setState({ creditTotal: credTotal });
-    //}
+        // Adding a debit transaction
+        if (type === 0) {
+            const transactions = this.state.debits;
 
-    addCreditTransaction = (creditTransaction) => {
-        const transactions = this.state.credits;
-
-        // Newer transactions should appear at the top of the page, so a new transaction should be added to the front of the array.
-        transactions.unshift(creditTransaction);
-        this.setState({ credits: transactions });
+            // Newer transactions should appear at the top of the page, so a new transaction should be added to the front of the array.
+            transactions.unshift(transaction);
+            this.setState({ debits: transactions });
+        }
+        // Adding a credit transaction
+        else{
+            const transactions = this.state.credits;
+            transactions.unshift(transaction);
+            this.setState({ credits: transactions });
+        }       
     }
 
-    /* Both functions take a parameter passed by the Debits component to modify states at the App level*/
     increment = (type,amount) => {
-        if (type === 'debit') {
+        if (type === 0) {
             // Adding a debit will subtract from the balance.
-            const debTotal = this.state.debitTotal - amount;
+            const debTotal = this.state.debitTotal - (-1*amount);
             this.setState({ debitTotal: debTotal });
         }
-        else if(type === 'credit') {
+        else {
             // Adding a credit will add to the balance.
-            const credTotal = (this.state.creditTotal - (amount*-1));
+            const credTotal = this.state.creditTotal - (-1*amount);
             this.setState({ creditTotal: credTotal });
         }
-    }
-
-    addDebitTransaction = (debitTransaction) => {
-        const transactions = this.state.debits;
-
-    // Newer transactions should appear at the top of the page, so a new transaction should be added to the front of the array.
-        transactions.unshift(debitTransaction);
-        this.setState({ debits: transactions });
     }
 
     mockLogIn = (logInInfo) => {
@@ -96,6 +90,8 @@ class App extends Component{
 
         const newUser ={
             userName: this.state.currentUser.userName,
+
+            // User does not input memberSince data, so the memberSince of currentUser is used instead in order to keep UserProfile page more complete.
             memberSince: this.state.currentUser.memberSince
         };
 
@@ -107,15 +103,15 @@ class App extends Component{
     render(){
 
         const HomeComponent = () => (<Home accountBalance={this.state.creditTotal - this.state.debitTotal} />);
-        const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} /*{...this.props}*/ />);
+        const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn}/>);
         const UserProfileComponent = () =>
             (<UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
         );
         const CreditComponent = () =>
-            (<Credits increment={this.increment} addCreditTransaction={this.addCreditTransaction} credits={this.state.credits} accountBalance={(this.state.creditTotal - this.state.debitTotal)} />
+            (<Credits increment={this.increment} addTransaction={this.addTransaction} credits={this.state.credits} accountBalance={(this.state.creditTotal - this.state.debitTotal)} />
         );
         const DebitComponent = () =>
-            (<Debits increment={this.increment} addDebitTransaction={this.addDebitTransaction} debits={this.state.debits} accountBalance={(this.state.creditTotal - this.state.debitTotal)} />
+            (<Debits increment={this.increment} addTransaction={this.addTransaction} debits={this.state.debits} accountBalance={(this.state.creditTotal - this.state.debitTotal)} />
         );
 
         return (

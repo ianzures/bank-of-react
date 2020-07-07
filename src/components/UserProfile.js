@@ -2,34 +2,27 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 const links = {
-    float: 'right',
-    paddingRight: '3%',
     fontSize: '30%',
+    paddingLeft: '55.75%',
     fontWeight: 'normal',
-    fontFamily: 'Georgia'
-}
-
-const name = {
-    paddingLeft: "2%",
-    fontSize: '300%',
+    fontFamily: 'Georgia',
 }
 
 const background = {
-    backgroundImage: 'url("https://static.independent.co.uk/s3fs-public/thumbnails/image/2013/09/12/21/bank-of-england-EPA.jpg")',
+    marginTop: '-.5%',
+    paddingBottom: '50%',
     backgroundSize: 'cover',
     backgroundPositin: 'center',
-    paddingBottom: '50%',
-    marginTop: '-.5%',
+    backgroundImage: 'url("https://static.independent.co.uk/s3fs-public/thumbnails/image/2013/09/12/21/bank-of-england-EPA.jpg")',
 }
 
-const heading = {
+const profile = {
     color: '#FFFAFA',
-    textShadow: '2px 2px 4px #000000',
-    textDecoration: 'underline',
-    fontSize: '100%',
+    fontSize: '115%',
     fontWeight: 'normal',
-    paddingLeft: '5%',
-    paddingTop:'1%'
+    padding: '1% 0% 0% 5%',
+    textDecoration: 'underline',
+    textShadow: '2px 2px 4px #000000',
 }
 
 class UserProfile extends Component{
@@ -37,15 +30,18 @@ class UserProfile extends Component{
     render(){
         return (
             <div>
-                <h1 style={name}>User Profile
+                <h1 style={{ paddingLeft: "2%", fontSize: '300%' }}>    User Profile
                     <span style={links}>
-                        <Link to="/">Home</Link>
+                        <Link style={{ paddingRight: '1%' }} to="/">Home</Link>
+                        <Link style={{ paddingRight: '1%' }} to="/login">Login</Link>
+                        <Link style={{ paddingRight: '1%' }} to="/debits">Debits</Link>
+                        <Link style={{ paddingRight: '1%' }} to="/credits">Credits</Link>
                     </span>
                 </h1>
 
                 <div style={background}>
-                    <div style={heading}>Username: {this.props.userName}</div>
-                    <div style={heading}>Member Since: {this.props.memberSince}</div>
+                    <div style={profile}>Username: {this.props.userName}</div>
+                    <div style={profile}>Member Since: {this.props.memberSince}</div>
                 </div>
                 
             </div>

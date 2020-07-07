@@ -2,58 +2,30 @@ import React from 'react'
 import AccountBalance from './AccountBalance'
 import { Link } from 'react-router-dom';
 
-const name = {
-    paddingLeft: "2%",
-    fontSize: '300%',
-    borderBottom: '2px solid black',
-}
-
 const links = {
-    float: 'right',
-    paddingRight: '3%',
     fontSize: '30%',
+    paddingLeft: '61%',
     fontWeight: 'normal',
-    fontFamily: 'Georgia'
-}
-
-const transactions = {
-    marginTop: '-2.1%',
-    textAlign: 'center',
-    paddingTop: '10px'
-}
-
-const tran = {
-    fontFamily: 'Georgia'
-}
-
-const log = {
-    paddingTop: '3%',
-    paddingLeft: '3%',
-    paddingBottom:'3%',
     fontFamily: 'Georgia',
 }
 
-const space = {
-    marginBottom: '10px'
+const entry = {
+    padding: '1% 0% 3% 3%',
+    fontFamily: 'Georgia',
 }
 
-const test = {
-    paddingLeft: '5%',
-}
 
 class Debits extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-           // debAB : 0,
-            transactions: [],
             description: '',
             amount: 0,
             date:''
         }
     }
 
-    componentDidMount() {
+    componentDidMount() { 
         let d = new Date();
         let fullDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
         this.setState({ date: fullDate });
@@ -74,6 +46,9 @@ class Debits extends React.Component {
     handleSubmit = event => {
 
         event.preventDefault();
+
+        this.props.increment(0,this.state.amount);
+
         let mockId = 'cdsrcComp-' + this.state.description.substring(0, 4) + this.state.amount;
         const debitTransaction = {
             id: mockId,
@@ -82,51 +57,46 @@ class Debits extends React.Component {
             date: this.state.date
         }
 
-        let tempArr = [];
-        this.state.transactions.map(tr => tempArr.push(tr));
-        tempArr.unshift(debitTransaction);
-
-        this.setState({ transactions: tempArr });
-
-       // let nTotal = this.props.accountBalance - this.state.amount;
-        //this.setState({ debAB: nTotal });
+        this.props.addTransaction(0,debitTransaction);
     }
 
     render() {
         return(
-            <div>
-                
-                <h1 style={name}>Debits
+            <div>         
+                <h1 style={{ paddingLeft: "2%", fontSize: '300%' }}>   Debits
                     <span style={links}>
-                        <Link to="/">Home</Link>
+                        <Link style={{ paddingRight: '1%' }} to="/userProfile">User Profile</Link>
+                        <Link style={{ paddingRight: '1%' }} to="/login">Login</Link>
+                        <Link style={{ paddingRight: '1%' }} to="/">Home</Link>
+                        <Link style={{ paddingRight: '1%' }} to="/credits">Credits</Link>
                     </span>
                 </h1>
 
-                <div style={{ backgroundColor:'#FFECC4'}}>
-                    <div style={transactions}>
-                        {this.state.transactions.map(tr => <p style={tran} key={tr.id}>{tr.description} | ${tr.amount} | {tr.date}</p>)}
-                        {this.props.debits.map(deb => <p style={tran} key={deb.id}>{deb.description} | ${deb.amount} | {deb.date.substring(0,10)}</p>)}
+                <div style={{backgroundColor: '#FFECC4', borderTop: '2px solid black', marginTop: '-.5%',}}>
+                    <div style={{ textAlign: 'center', paddingTop: '10px' }}>
+                        {this.props.debits.map(deb => <p style={{ fontFamily: 'Georgia' }} key={deb.id}>
+                            {deb.description} | ${deb.amount} | {deb.date.substring(0, 10)}</p>)
+                        }
                     </div>
 
                     <AccountBalance accountBalance={this.props.accountBalance} />
 
-                    <form onSubmit={this.handleSubmit} style={log}>
-                        <div style={space}>
+                    <form onSubmit={this.handleSubmit} style={entry}>
+                        <div style={{ marginBottom: '10px' }}>
                             <label htmlFor="description">Description: </label>
                             <input type="text" name="des" onChange={this.handleChange} />
                         </div>
 
-                        <div style={space}>
+                        <div style={{ marginBottom: '10px' }}>
                             <label htmlFor="amount">Amount: </label>
                             <input type="number" step="0.01" min="0" name="a" onChange={this.handleChange} />
                         </div>
 
-                        <span style={test}>
+                        <span style={{ paddingLeft: '5%' }}>
                             <button>Add debit</button>
                         </span>
                     </form>
                 </div>
-
             </div>   
         );
     }
