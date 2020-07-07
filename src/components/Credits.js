@@ -2,7 +2,7 @@ import React from 'react'
 import AccountBalance from './AccountBalance'
 import { Link } from 'react-router-dom'
 
-const link = {
+const links = {
     fontSize: '30%',
     paddingLeft: '61%',
     fontWeight: 'normal',
@@ -10,9 +10,7 @@ const link = {
 }
 
 const entry = {
-    paddingTop: '3%',
-    paddingLeft: '3%',
-    paddingBottom: '3%',
+    padding: '1% 0% 3% 3%',
     fontFamily: 'Georgia',
 }
 
@@ -78,7 +76,7 @@ class Credits extends React.Component {
         return (
             <div>         
                 <h1 style={{ paddingLeft: "2%", fontSize: '300%' }}>   Credits
-                    <span style={link}>
+                    <span style={links}>
                         <Link style={{ paddingRight: '1%' }} to="/userProfile">User Profile</Link>
                         <Link style={{ paddingRight: '1%' }} to="/login">Login</Link>
                         <Link style={{ paddingRight: '1%' }} to="/">Home</Link>
