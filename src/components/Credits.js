@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 const name = {
     paddingLeft: "2%",
     fontSize: '300%',
-    borderBottom: '2px solid black',
 }
 
 const links = {
